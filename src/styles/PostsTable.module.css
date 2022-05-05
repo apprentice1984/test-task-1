@@ -4,12 +4,18 @@
   border-spacing: 0;
   width: 100%;
   table-layout: fixed;
+  font-size: 13px;
+}
+
+.postsTable tr {
+  line-height: 18px;
 }
 
 .postsTable thead th {
   color: #ffffff;
   background-color: var(--darkgray);
   width: 50%;
+  height: 50px;
 }
 
 .postsTable thead th:first-of-type {
@@ -22,14 +28,15 @@
 
 .postsTable td {
   border: 1px solid var(--lightgray);
-  height: 30px;
-  max-height: 40px;
-  padding: 10px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  padding: 7px;
 }
 
 .postsTable td:not(:first-of-type) {
   text-align: left;
+}
+
+table td div {
+  height: 50px;
+  overflow-y: hidden;
+  text-overflow: ellipsis;
 }

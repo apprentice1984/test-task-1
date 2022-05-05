@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from '../../styles/PostsTable.module.css'
 import Spinner from '../spinner/Spinner'
-import Pagination from '../pagination/Pagination';
+import Pagination from '../pagination/Pagination'
 import { selectAllPosts, fetchPosts } from './postsSlice'
 import { nanoid } from '@reduxjs/toolkit'
 
@@ -18,6 +18,7 @@ const PostsTable = () => {
   useEffect(() => {
     if (postStatus === 'idle') {
       dispatch(fetchPosts())
+      console.log('i fire once')
     }
   }, [postStatus, dispatch])
 
@@ -36,9 +37,15 @@ const PostsTable = () => {
   } else if (postStatus === 'succeeded') {
     const tableRowsPosts = currentTableData.map((post) => (
       <tr key={nanoid()}>
-        <td>{post.id}</td>
-        <td>{post.title}</td>
-        <td>{post.body}</td>
+        <td>
+          <div>{post.id}</div>
+        </td>
+        <td>
+          <div>{post.title}</div>
+        </td>
+        <td>
+          <div>{post.body}</div>
+        </td>
       </tr>
     ))
 

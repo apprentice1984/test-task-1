@@ -2,6 +2,7 @@ import React from 'react'
 import classnames from 'classnames'
 import { usePagination, DOTS } from '../hooks/usePagination'
 import './pagination.scss'
+import { nanoid } from '@reduxjs/toolkit'
 
 const Pagination = (props) => {
   const {
@@ -51,7 +52,11 @@ const Pagination = (props) => {
       {paginationRange.map((pageNumber) => {
         // If the pageItem is a DOT, render the DOTS unicode character
         if (pageNumber === DOTS) {
-          return <li className='pagination-item dots'>&#8230;</li>
+          return (
+            <li className='pagination-item dots' key={nanoid()}>
+              &#8230;
+            </li>
+          )
         }
 
         // Render our Page Pills
@@ -61,6 +66,7 @@ const Pagination = (props) => {
               selected: pageNumber === currentPage,
             })}
             onClick={() => onPageChange(pageNumber)}
+            key={nanoid()}
           >
             {pageNumber}
           </li>
@@ -73,7 +79,7 @@ const Pagination = (props) => {
         })}
         onClick={onNext}
       >
-        <span className='arrow'>ДАЛЕЕ</span>
+        <span className='arrow'>Далее</span>
       </li>
     </ul>
   )
