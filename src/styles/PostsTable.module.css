@@ -1,0 +1,35 @@
+/* TABLE STYLES */
+.postsTable {
+  text-align: center;
+  border-spacing: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.postsTable thead th {
+  color: #ffffff;
+  background-color: var(--darkgray);
+  width: 50%;
+}
+
+.postsTable thead th:first-of-type {
+  width: 10%;
+}
+
+.postsTable thead th:last-of-type {
+  width: 40%;
+}
+
+.postsTable td {
+  border: 1px solid var(--lightgray);
+  height: 30px;
+  max-height: 40px;
+  padding: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.postsTable td:not(:first-of-type) {
+  text-align: left;
+}

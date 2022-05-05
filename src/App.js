@@ -1,8 +1,19 @@
 import './App.css'
+import Search from './components/search/Search'
+import PostsTable from './components/tables/PostsTable.jsx'
 
-// fetch https://jsonplaceholder.typicode.com/posts
 function App() {
-  return <>THE APP.................</>
+  return (
+    <div className='container'>
+      <header>
+        <Search />
+      </header>
+
+      <main>
+        <PostsTable />
+      </main>
+    </div>
+  )
 }
 
 export default App
