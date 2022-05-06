@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import styles from '../../styles/PostsTable.module.css'
+import { nanoid } from '@reduxjs/toolkit'
+import { useSortData } from '../hooks/useSortData'
+import { selectAllPosts, fetchPosts } from './postsSlice'
 import Spinner from '../spinner/Spinner'
 import Pagination from '../pagination/Pagination'
-import { selectAllPosts, fetchPosts } from './postsSlice'
-import { nanoid } from '@reduxjs/toolkit'
+
+import { ReactComponent as SortIcon } from '../../assets/iconForSorting.svg'
+import styles from '../../styles/PostsTable.module.css'
 
 let PageSize = 10
 
@@ -15,20 +18,35 @@ const PostsTable = () => {
   const postStatus = useSelector((state) => state.posts.status)
   const error = useSelector((state) => state.posts.error)
 
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const { sortPosts, requestSort, sortConfig } = useSortData(posts)
+
+  const getRotationFor = (name) => {
+    if (!sortConfig) {
+      return
+    }
+    return sortConfig.key === name
+      ? {
+          transform: `rotateX(${
+            sortConfig.direction === 'descending' ? '0' : '180'
+          }deg)`,
+        }
+      : undefined
+  }
+
   useEffect(() => {
     if (postStatus === 'idle') {
       dispatch(fetchPosts())
-      console.log('i fire once')
     }
+    console.log('useEffect ran....')
   }, [postStatus, dispatch])
-
-  const [currentPage, setCurrentPage] = useState(1)
 
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize
     const lastPageIndex = firstPageIndex + PageSize
-    return posts.slice(firstPageIndex, lastPageIndex)
-  }, [currentPage, posts])
+    return sortPosts.slice(firstPageIndex, lastPageIndex)
+  }, [currentPage, sortPosts])
 
   let content
 
@@ -54,9 +72,27 @@ const PostsTable = () => {
         <table className={styles.postsTable}>
           <thead>
             <tr>
-              <th scope='col'>ID</th>
-              <th scope='col'>Заголовок</th>
-              <th scope='col'>Описание</th>
+              <th scope='col'>
+                ID{' '}
+                <SortIcon
+                  style={getRotationFor('id')}
+                  onClick={() => requestSort('id')}
+                />
+              </th>
+              <th scope='col'>
+                Заголовок
+                <SortIcon
+                  style={getRotationFor('title')}
+                  onClick={() => requestSort('title')}
+                />
+              </th>
+              <th scope='col'>
+                Описание
+                <SortIcon
+                  style={getRotationFor('body')}
+                  onClick={() => requestSort('body')}
+                />
+              </th>
             </tr>
           </thead>
           <tbody>{tableRowsPosts}</tbody>
@@ -64,7 +100,7 @@ const PostsTable = () => {
         <Pagination
           className='pagination-bar'
           currentPage={currentPage}
-          totalCount={posts.length}
+          totalCount={sortPosts.length}
           pageSize={PageSize}
           onPageChange={(page) => setCurrentPage(page)}
         />

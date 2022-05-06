@@ -31,7 +31,6 @@ const postsSlice = createSlice({
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const response = await fetch(POSTS_URL)
   const data = await response.json()
-  console.log(data);
   return data
 })
 

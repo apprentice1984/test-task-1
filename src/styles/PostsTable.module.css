@@ -18,6 +18,12 @@
   height: 50px;
 }
 
+.postsTable thead th svg {
+  cursor: pointer;
+  margin-left: 10%;
+  transform: rotate(0deg);
+}
+
 .postsTable thead th:first-of-type {
   width: 10%;
 }
@@ -31,12 +37,31 @@
   padding: 7px;
 }
 
-.postsTable td:not(:first-of-type) {
-  text-align: left;
-}
-
-table td div {
+.postsTable td div {
   height: 50px;
   overflow-y: hidden;
   text-overflow: ellipsis;
+}
+
+.postsTable tr td div {
+  display: grid;
+  place-items: center start;
+  text-align: start;
+}
+
+.postsTable tr td:first-child div {
+  display: grid;
+  place-items: center;
+}
+
+@media (max-height: 800px) {
+  .postsTable td {
+    padding: 1px;
+    font-size: 10px;
+    height: 20px;
+  }
+
+  .postsTable thead th {
+    height: 30px;
+  }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Spinner = () => {
-  return <p>Loading...</p>
+  return <h1>Идет загрузка...</h1>
 }
 
 export default Spinner
