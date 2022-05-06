@@ -39,7 +39,7 @@ const PostsTable = () => {
     if (postStatus === 'idle') {
       dispatch(fetchPosts())
     }
-    // console.log('useEffect ran....')
+    console.log('useEffect ran....')
   }, [postStatus, dispatch])
 
   const currentTableData = useMemo(() => {

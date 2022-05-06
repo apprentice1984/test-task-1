@@ -11,16 +11,7 @@ const initialState = {
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {
-    filterPosts(state, { payload }) {
-      state.posts = state.posts.filter(
-        (post) =>
-          post.title.includes(payload) ||
-          post.body.includes(payload) ||
-          post.id.toString().includes(payload)
-      )
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchPosts.pending, (state, action) => {
@@ -36,8 +27,6 @@ const postsSlice = createSlice({
       })
   },
 })
-
-export const { filterPosts } = postsSlice.actions
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const response = await fetch(POSTS_URL)
