@@ -1,9 +1,17 @@
 import React, { useRef } from 'react'
 import styles from '../../styles/Search.module.css'
 import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
+import {  useDispatch } from 'react-redux'
+import {  filterPosts } from '../tables/postsSlice'
 
 const Search = () => {
   const inputRef = useRef(null)
+
+  const dispatch = useDispatch()
+
+  const filterRows = e=> {
+    dispatch(filterPosts(e.target.value))
+  }
 
   const handleClick = (e) => {
     inputRef.current.focus()
@@ -16,6 +24,7 @@ const Search = () => {
         placeholder='Поиск'
         className={styles.searchInput}
         ref={inputRef}
+        onChange={filterRows}
       />
       <SearchIcon style={styleForSvg} onClick={() => handleClick()} />
     </div>
