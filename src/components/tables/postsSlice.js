@@ -6,20 +6,31 @@ const initialState = {
   posts: [],
   status: 'idle',
   error: null,
+  filteredPosts: [],
 }
 
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {},
+  reducers: {
+    filterPosts(state, { payload }) {
+      state.filteredPosts = state.posts.filter(
+        (post) =>
+          post.title.includes(payload) ||
+          post.body.includes(payload) ||
+          post.id.toString().includes(payload)
+      )
+    },
+  },
   extraReducers(builder) {
     builder
-      .addCase(fetchPosts.pending, (state, action) => {
+      .addCase(fetchPosts.pending, (state, _) => {
         state.status = 'loading'
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.posts = state.posts.concat(action.payload)
+        state.filteredPosts = [...state.posts]
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = 'failed'
@@ -34,6 +45,8 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return data
 })
 
+export const { filterPosts } = postsSlice.actions
+
 export default postsSlice.reducer
 
-export const selectAllPosts = (state) => state.posts.posts
+export const selectAllPosts = (state) => state.posts.filteredPosts

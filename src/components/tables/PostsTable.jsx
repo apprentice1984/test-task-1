@@ -22,7 +22,7 @@ const PostsTable = () => {
 
   const { sortPosts, requestSort, sortConfig } = useSortData(posts)
 
-  const getRotationFor = (name) => {
+  const getStyling = (name) => {
     if (!sortConfig) {
       return
     }
@@ -38,8 +38,8 @@ const PostsTable = () => {
   useEffect(() => {
     if (postStatus === 'idle') {
       dispatch(fetchPosts())
+      console.log('initial posts fetching....')
     }
-    console.log('useEffect ran....')
   }, [postStatus, dispatch])
 
   const currentTableData = useMemo(() => {
@@ -75,21 +75,21 @@ const PostsTable = () => {
               <th scope='col'>
                 ID{' '}
                 <SortIcon
-                  style={getRotationFor('id')}
+                  style={getStyling('id')}
                   onClick={() => requestSort('id')}
                 />
               </th>
               <th scope='col'>
                 Заголовок
                 <SortIcon
-                  style={getRotationFor('title')}
+                  style={getStyling('title')}
                   onClick={() => requestSort('title')}
                 />
               </th>
               <th scope='col'>
                 Описание
                 <SortIcon
-                  style={getRotationFor('body')}
+                  style={getStyling('body')}
                   onClick={() => requestSort('body')}
                 />
               </th>
