@@ -1,6 +1,9 @@
 # Link to deployed site
 https://users-posts-table.web.app/
 
+Простое приложение, которое получает данные с внешнего API (jsonplaceholder) и рендерит их в таблицу.
+Из фич есть - сортировка по полям(по возрастанию и убыванию), поиск по всем записям, пагинация.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
