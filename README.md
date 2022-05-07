@@ -1,4 +1,5 @@
-# Link to deployed site
+# Website with table of posts
+### Link to deployed site
 https://users-posts-table.web.app/
 
 Простое приложение, которое получает данные с внешнего API (jsonplaceholder) и рендерит их в таблицу.
