@@ -1,18 +1,21 @@
 import './App.css'
 import Search from './components/search/Search'
 import PostsTable from './components/tables/PostsTable.jsx'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 function App() {
   return (
-    <div className='container'>
-      <header>
-        <Search />
-      </header>
+    <Router>
+      <div className='container'>
+        <header>
+          <Search />
+        </header>
 
-      <main>
-        <PostsTable />
-      </main>
-    </div>
+        <main>
+            <PostsTable />
+        </main>
+      </div>
+    </Router>
   )
 }
 

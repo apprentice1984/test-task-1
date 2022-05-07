@@ -2,10 +2,13 @@ import React from 'react'
 import classnames from 'classnames'
 import { usePagination, DOTS } from '../hooks/usePagination'
 import { nanoid } from '@reduxjs/toolkit'
+import { useNavigate } from 'react-router-dom'
 
 import './pagination.scss'
 
 const Pagination = (props) => {
+  const navigate = useNavigate()
+
   const {
     onPageChange,
     totalCount,
@@ -29,10 +32,18 @@ const Pagination = (props) => {
   // определяем функции перехода на след страницу
   const onNext = () => {
     onPageChange(currentPage + 1)
+    navigate(`page/${currentPage + 1}`)
   }
 
   const onPrevious = () => {
     onPageChange(currentPage - 1)
+    navigate(`page/${currentPage - 1}`)
+  }
+
+  //обработчик клика по номеру страницы
+  const handlePageClick = (pageNumber) => {
+    onPageChange(pageNumber)
+    navigate(`page/${pageNumber}`)
   }
 
   // кладем в переменную номер последней страницы
@@ -65,7 +76,7 @@ const Pagination = (props) => {
             className={classnames('pagination-item', {
               selected: pageNumber === currentPage,
             })}
-            onClick={() => onPageChange(pageNumber)}
+            onClick={() => handlePageClick(pageNumber)}
             key={nanoid()}
           >
             {pageNumber}

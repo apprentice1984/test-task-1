@@ -5,6 +5,7 @@ import { useSortData } from '../hooks/useSortData'
 import { selectAllPosts, fetchPosts } from './postsSlice'
 import Spinner from '../spinner/Spinner'
 import Pagination from '../pagination/Pagination'
+import { useNavigate } from 'react-router-dom'
 
 import { ReactComponent as SortIcon } from '../../assets/iconForSorting.svg'
 import styles from '../../styles/PostsTable.module.css'
@@ -14,6 +15,8 @@ let PageSize = 10
 const PostsTable = () => {
   const dispatch = useDispatch()
   const posts = useSelector(selectAllPosts)
+
+  const navigate = useNavigate()
 
   const postStatus = useSelector((state) => state.posts.status)
   const error = useSelector((state) => state.posts.error)
@@ -38,24 +41,33 @@ const PostsTable = () => {
   useEffect(() => {
     if (postStatus === 'idle') {
       dispatch(fetchPosts())
-      console.log('initial posts fetching....')
+      navigate('/')
     }
-  }, [postStatus, dispatch])
+  }, [postStatus, dispatch, navigate])
 
+  //кладем в переменную записи для текущей страницы
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize
     const lastPageIndex = firstPageIndex + PageSize
     if (sortPosts.slice(firstPageIndex, lastPageIndex).length !== 0) {
-      console.log('here')
       return sortPosts.slice(firstPageIndex, lastPageIndex)
     } else if (postStatus === 'succeeded') {
       setCurrentPage(Math.ceil(sortPosts.length / PageSize))
       return sortPosts
+    } else {
+      return sortPosts
     }
   }, [currentPage, sortPosts, postStatus])
 
+  //обработчик для переключения страницы
+  const changePage = (page) => {
+    setCurrentPage(page)
+  }
+
+  //объявляем переменную под контент с таблицей постов
   let content
 
+  //в зависимости от статуса запроса на сервер - loading, success, fail - будем возвращать разные данные (content)
   if (postStatus === 'loading') {
     content = <Spinner />
   } else if (postStatus === 'succeeded') {
@@ -108,7 +120,7 @@ const PostsTable = () => {
           currentPage={currentPage}
           totalCount={sortPosts.length}
           pageSize={PageSize}
-          onPageChange={(page) => setCurrentPage(page)}
+          onPageChange={changePage}
         />
       </>
     )
