@@ -1,8 +1,9 @@
 import React, { useRef } from 'react'
-import styles from '../../styles/Search.module.css'
-import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
 import { useDispatch } from 'react-redux'
 import { filterPosts } from '../tables/postsSlice'
+
+import styles from '../../styles/Search.module.css'
+import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
 
 const Search = () => {
   const inputRef = useRef(null)

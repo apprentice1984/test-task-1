@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 
-export const useSortData = (items, config = null) => {
+export const useSortData = (items) => {
   const [sortConfig, setSortConfig] = useState({
     key: 'id',
     direction: 'descending',

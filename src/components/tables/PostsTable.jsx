@@ -45,8 +45,14 @@ const PostsTable = () => {
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize
     const lastPageIndex = firstPageIndex + PageSize
-    return sortPosts.slice(firstPageIndex, lastPageIndex)
-  }, [currentPage, sortPosts])
+    if (sortPosts.slice(firstPageIndex, lastPageIndex).length !== 0) {
+      console.log('here')
+      return sortPosts.slice(firstPageIndex, lastPageIndex)
+    } else if (postStatus === 'succeeded') {
+      setCurrentPage(Math.ceil(sortPosts.length / PageSize))
+      return sortPosts
+    }
+  }, [currentPage, sortPosts, postStatus])
 
   let content
 
@@ -97,8 +103,8 @@ const PostsTable = () => {
           </thead>
           <tbody>{tableRowsPosts}</tbody>
         </table>
+
         <Pagination
-          className='pagination-bar'
           currentPage={currentPage}
           totalCount={sortPosts.length}
           pageSize={PageSize}

@@ -1,8 +1,9 @@
 import React from 'react'
 import classnames from 'classnames'
 import { usePagination, DOTS } from '../hooks/usePagination'
-import './pagination.scss'
 import { nanoid } from '@reduxjs/toolkit'
+
+import './pagination.scss'
 
 const Pagination = (props) => {
   const {
@@ -11,9 +12,9 @@ const Pagination = (props) => {
     siblingCount = 1,
     currentPage,
     pageSize,
-    className,
   } = props
 
+  // хук usePagination возвращает нам массив с номерами страниц
   const paginationRange = usePagination({
     currentPage,
     totalCount,
@@ -21,11 +22,11 @@ const Pagination = (props) => {
     pageSize,
   })
 
-  // If there are less than 2 times in pagination range we shall not render the component
   if (currentPage === 0 || paginationRange.length < 2) {
     return null
   }
 
+  // определяем функции перехода на след страницу
   const onNext = () => {
     onPageChange(currentPage + 1)
   }
@@ -34,13 +35,12 @@ const Pagination = (props) => {
     onPageChange(currentPage - 1)
   }
 
+  // кладем в переменную номер последней страницы
   let lastPage = paginationRange[paginationRange.length - 1]
 
   return (
-    <ul
-      className={classnames('pagination-container', { [className]: className })}
-    >
-      {/* Left navigation arrow */}
+    <ul className={classnames('pagination-container')}>
+      {/* Кнопка навигации влево */}
       <li
         className={classnames('pagination-item', {
           disabled: currentPage === 1,
@@ -50,7 +50,7 @@ const Pagination = (props) => {
         <span className='arrow'>Назад</span>
       </li>
       {paginationRange.map((pageNumber) => {
-        // If the pageItem is a DOT, render the DOTS unicode character
+        // Если у нас "точки", то показываем точки (юникод значение)
         if (pageNumber === DOTS) {
           return (
             <li className='pagination-item dots' key={nanoid()}>
@@ -59,7 +59,7 @@ const Pagination = (props) => {
           )
         }
 
-        // Render our Page Pills
+        // Показать номера страниц
         return (
           <li
             className={classnames('pagination-item', {
@@ -72,7 +72,7 @@ const Pagination = (props) => {
           </li>
         )
       })}
-      {/*  Right Navigation arrow */}
+      {/*  Кнопка навигации вправо */}
       <li
         className={classnames('pagination-item', {
           disabled: currentPage === lastPage,
